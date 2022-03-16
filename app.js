@@ -1,7 +1,14 @@
+var selectedRow=null;
 function onMyFormSubmit(){
     var KeepFormData= readFromData();
     console.log(KeepFormData);
-    insertNewRecord(KeepFormData)
+    if(selectedRow==null){
+        insertNewRecord(KeepFormData)
+
+    }
+    else {
+        updateDate(KeepFormData);
+    }
     reset();
     
 }
@@ -28,8 +35,8 @@ function insertNewRecord(data){
     cell2.innerHTML=data.empCode;
     cell3.innerHTML=data.salary;
     cell4.innerHTML=data.city;
-    cell5.innerHTML=` <a>Edit</a>
-    <a>Delete</a> `;
+    cell5.innerHTML=` <a onClick="onEdit(this)">Edit</a>
+    <a onClick="onDelete(this)">Delete</a> `;
 
 }
 
@@ -40,3 +47,27 @@ function reset(){
     document.getElementById('city').value="";
     
 }
+
+
+// edit 
+function onEdit(td){
+    selectedRow=td.parentElement.parentElement;
+    console.log(selectedRow);
+    
+    document.getElementById('fullName').value=selectedRow.cells[0].innerHTML;
+    document.getElementById('empCode').value=selectedRow.cells[1].innerHTML;
+    document.getElementById('salary').value=selectedRow.cells[2].innerHTML;
+    document.getElementById('city').value=selectedRow.cells[3].innerHTML;    
+    
+}
+
+// update 
+function updateDate(formData){
+    selectedRow.cells[0].innerHTML=formData.fullName;
+    selectedRow.cells[1].innerHTML=formData.empCode;
+    selectedRow.cells[2].innerHTML=formData.salary;
+    selectedRow.cells[3].innerHTML=formData.city;
+}
+
+
+
